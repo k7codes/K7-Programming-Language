@@ -1,0 +1,22 @@
+# Örnek 3 - JSON + map/filter/reduce
+import json
+
+veri = json.parse("""[
+  {"ad": "Ali", "yas": 20},
+  {"ad": "Ayşe", "yas": 25},
+  {"ad": "Can", "yas": 16},
+  {"ad": "Deniz", "yas": 30}
+]""")
+
+buyukler = veri |> filter(x > x["yas"] >= 18)
+print(json.stringify(buyukler))
+
+isimler = buyukler |> map(x > x["ad"] + " (" + str(x["yas"]) + ")")
+print(json.stringify(isimler))
+
+toplam_yas = buyukler |> fold(0, (acc, x) > acc + x["yas"])
+ortalama = 0
+if len(buyukler) > 0 {
+    ortalama = toplam_yas / len(buyukler)
+}
+print("Toplam yas:", toplam_yas, "Ortalama:", ortalama)

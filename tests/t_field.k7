@@ -1,0 +1,20 @@
+class Kutu {
+    var veriler = []
+
+    fn ekle(x) {
+        veriler = veriler + [x]
+        return (len(veriler))
+    }
+
+    fn say() {
+        return (len(veriler))
+    }
+}
+
+k = Kutu()
+print("ekle:", k.ekle(10))
+print("ekle:", k.ekle(20))
+print("say:", k.say())
+
+k2 = Kutu()
+print("k2 say:", k2.say())

@@ -1,0 +1,60 @@
+# Örnek 2 - Sınıf ve kalıtım
+class Canli {
+    fn tanit() {
+        return "Canlı"
+    }
+}
+
+class Hayvan < Canli {
+    var isim = ""
+
+    fn yeni(isim) {
+        self.isim = isim
+    }
+
+    fn ses_cikar() {
+        return "ses yok"
+    }
+
+    fn tanit() {
+        return "Ben " + self.isim + ": " + self.ses_cikar()
+    }
+}
+
+class Kopek < Hayvan {
+    fn ses_cikar() {
+        return "hav hav"
+    }
+}
+
+class Kedi < Hayvan {
+    fn ses_cikar() {
+        return "miyav"
+    }
+}
+
+k = Kopek()
+k.yeni("Karabaş")
+print(k.tanit())
+
+m = Kedi()
+m.yeni("Tekir")
+print(m.tanit())
+print(Kopek().tanit())  # isim boş
+
+class Liste {
+    var veriler = []
+
+    fn ekle(x) {
+        veriler = veriler + [x]
+    }
+
+    fn say() {
+        return (len(veriler))
+    }
+}
+
+l = Liste()
+l.ekle(10)
+l.ekle(20)
+print("sayi:", l.say(), "ilk:", l.veriler[0])

@@ -1,0 +1,65 @@
+# K7 - temel dil testi
+ad = "K7"
+sayac = 0
+
+print("Merhaba {ad}!")
+print('Tek tirnak da calisiyor: {ad}')
+
+# lambda + pipe
+kareler = [1, 2, 3, 4] |> map(x > x * x) |> filter(x > 4)
+print("kareler:", kareler)
+
+# sinif + kalitim
+class Hayvan {
+    var ses = "..."
+
+    fn konus() {
+        return (self.ses)
+    }
+
+    fn tanit() {
+        return ("Ben: " + self.konus())
+    }
+}
+
+class Kedi < Hayvan {
+    fn konus() {
+        return "miyav"
+    }
+}
+
+print(Kedi().tanit())
+
+# match
+fn sinifla(n) {
+    return (match n {
+        case 0 -> "sifir"
+        case 1 -> "bir"
+        case _ -> "cok"
+    })
+}
+print(sinifla(0), sinifla(1), sinifla(7))
+
+# donguler
+toplam = 0
+for i in range(1, 11) {
+    if i > 5 { break }
+    toplam += i
+}
+print("toplam:", toplam)
+
+# sozlukler ve setler
+sozluk = {"a": 1, "b": 2}
+print(sozluk["a"], len(sozluk), "b" in sozluk)
+kume = #{1, 2, 3}
+print(len(kume), 2 in kume)
+
+# hata yakalama
+try {
+    throw "bilerek hata"
+} catch e {
+    print("yakalandi:", e)
+}
+
+sayac = sayac + 1
+print("tamamlandi, sayac =", sayac)

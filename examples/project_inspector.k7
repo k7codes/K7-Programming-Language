@@ -1,0 +1,122 @@
+# K7 Project Inspector
+# Klasordeki .k7 kaynaklarini tarar; satir, boyut ve isaret raporu verir.
+# Kullanim:
+#   k7.bat examples\project_inspector.k7 [klasor] [json-rapor-yolu]
+
+import fs
+import json
+import time
+import os
+
+if len(argv) > 1 and (argv[1] == "-h" or argv[1] == "--help") {
+    print("K7 Project Inspector")
+    print("Kullanim: k7.bat examples\\project_inspector.k7 [klasor] [json-rapor-yolu]")
+    print("Ornek:   k7.bat examples\\project_inspector.k7 . .\\k7-report.json")
+    os.exit(0)
+}
+
+root = fs.cwd()
+if len(argv) > 1 {
+    root = argv[1]
+}
+if not fs.exists(root) {
+    print("Hata: klasor bulunamadi:", root)
+    os.exit(2)
+}
+if not fs.is_dir(root) {
+    print("Hata: yol bir klasor degil:", root)
+    os.exit(2)
+}
+build_dir = fs.join(root, "build")
+build_marker = build_dir + "\\"
+build_marker_alt = build_dir + "/"
+
+started = time.now_ms()
+todo_word = "TO" + "DO"
+fixme_word = "FIX" + "ME"
+files = []
+issues = []
+file_count = 0
+total_lines = 0
+total_bytes = 0
+marker_count = 0
+largest_path = ""
+largest_bytes = 0
+
+for entry in fs.walk(root) {
+    if entry["is_file"] and entry["ext"] == "k7" and not (build_marker in entry["path"]) and not (build_marker_alt in entry["path"]) {
+        path = entry["path"]
+        lines = fs.lines(path)
+        line_count = len(lines)
+        byte_count = entry["size"]
+        file_count += 1
+        total_lines += line_count
+        total_bytes += byte_count
+
+        if byte_count > largest_bytes {
+            largest_bytes = byte_count
+            largest_path = path
+        }
+
+        line_number = 0
+        for line in lines {
+            line_number += 1
+            if (todo_word in line) or (fixme_word in line) {
+                marker_count += 1
+                issue = {"file": path, "line": line_number, "text": line}
+                issues = issues + [issue]
+            }
+        }
+
+        file_info = {"path": path, "lines": line_count, "bytes": byte_count}
+        files = files + [file_info]
+    }
+}
+
+elapsed = time.now_ms() - started
+average_lines = 0
+if file_count > 0 {
+    average_lines = total_lines / file_count
+}
+
+print("")
+print("K7 PROJECT INSPECTOR")
+print("====================")
+print("Klasor:", root)
+print("K7 dosyasi:", file_count)
+print("Toplam satir:", total_lines)
+print("Ortalama satir/dosya:", average_lines)
+print("Toplam boyut (bayt):", total_bytes)
+print(todo_word + "/" + fixme_word + " satiri:", marker_count)
+print("Tarama suresi (ms):", elapsed)
+if file_count > 0 {
+    print("En buyuk dosya:", largest_path, "(", largest_bytes, "bayt)")
+}
+
+print("")
+print("DOSYALAR")
+for item in files {
+    print(" ", item["path"], "-", item["lines"], "satir,", item["bytes"], "bayt")
+}
+
+if marker_count > 0 {
+    print("")
+    print(todo_word + " / " + fixme_word)
+    for item in issues {
+        print(" ", item["file"] + ":" + str(item["line"]) + ":", item["text"])
+    }
+}
+
+report = {"root": root, "files_scanned": file_count, "total_lines": total_lines, "average_lines": average_lines, "total_bytes": total_bytes, "marker_lines": marker_count, "largest_file": largest_path, "largest_file_bytes": largest_bytes, "elapsed_ms": elapsed, "files": files, "issues": issues}
+
+if len(argv) > 2 {
+    report_path = argv[2]
+    fs.write(report_path, json.stringify(report))
+    print("")
+    print("JSON raporu kaydedildi:", report_path)
+}
+
+if marker_count > 0 {
+    os.exit(1)
+}
+os.exit(0)

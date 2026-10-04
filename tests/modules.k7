@@ -1,0 +1,73 @@
+# K7 - native modul testi
+import math
+import math as m
+import str as s
+import json
+import random
+import os
+import time
+import re
+import fs
+
+print("-- math --")
+print(math.sqrt(16), math.floor(2.7), math.ceil(2.1))
+print(math.pow(2, 10), math.abs(-7), max(3, 9, 4), min(3, 9, 4))
+print(math.round(3.14159), math.trunc(3.9), math.gcd(12, 18))
+print(math.clamp(15, 0, 10), math.lerp(0, 10, 0.25), math.factorial(5))
+print(m.abs(-1), math.is_finite(math.sqrt(2)), math.log2(8), math.sin(0))
+
+print("-- str --")
+print(s.upper("k7"), s.lower("K7"), s.repeat("ab", 3))
+print(s.join("-", ["a", "b", "c"]), s.title_case("k7 dili"))
+print(s.format("merhaba %s, yas=%d", "ali", 30), s.pad_start("7", 3, "0"))
+print(s.pad_end("k7", 5, "."), s.center("k7", 7, "*"), s.truncate("abcdef", 4))
+print(s.wrap("bir iki uc dort", 6), s.levenshtein("kitap", "kite"))
+
+print("-- json --")
+veri = {"ad": "Ali", "yas": 30, "liste": [1, 2, 3], "aktif": true}
+metin = json.stringify(veri)
+print(metin)
+geri = json.parse(metin)
+print(geri["ad"], geri["yas"], geri["liste"], geri["aktif"])
+print(json.dump(veri))
+
+print("-- fs --")
+fs_yol = fs.temp_dir() + "\\k7_test_dosya.txt"
+fs.write(fs_yol, "satir1\nsatir2\n")
+print(fs.exists(fs_yol), fs.size(fs_yol) > 0)
+print(len(fs.read(fs_yol)) > 0)
+print(len(fs.lines(fs_yol)))
+fs.append(fs_yol, "satir3\n")
+print(len(fs.lines(fs_yol)))
+print(fs.stem(fs_yol), fs.ext(fs_yol))
+print(fs.join("a", "b"), fs.name(fs_yol) != "")
+fs.remove(fs_yol)
+print(fs.exists(fs_yol))
+
+print("-- random --")
+random.seed(42)
+x = random.int(1, 6)
+random.seed(42)
+print(x == random.int(1, 6))
+print(random.float() >= 0 and random.float() < 1)
+print(random.choice(["k", "7", "dil"]))
+print(random.bool())
+
+print("-- os --")
+print(os.platform(), os.cpu_count() >= 1)
+print(fs.exists("build\\k7.exe"), fs.cwd() != "")
+
+print("-- time --")
+print(time.year() > 2000, time.month() >= 1, time.day() >= 1)
+print(time.now() > 1600000000, time.now_ms() > 1600000000000)
+print(time.format("%Y-%m-%d", 0))
+
+print("-- re --")
+print(re.match("[a-z]+", "k7"))
+print(re.search("[0-9]+", "k7 dil 2026"))
+print(re.find_all("[0-9]+", "a1 b22 c333"))
+print(re.replace_all("[0-9]+", "#", "a1 b22"))
+print(re.fullmatch("[a-z]+", "k7"))
+print(re.split(",", "a,b,c"))
+print(re.split("[,;]", "a,b;c"))
+print(re.escape("a.b*c"))

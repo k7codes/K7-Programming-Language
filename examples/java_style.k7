@@ -1,0 +1,30 @@
+// Java/C++ esintili K7 sozdizimi
+class Sayaç {
+    int deger = 0;
+
+    void ekle(int miktar) {
+        deger += miktar;
+    }
+
+    int oku() {
+        return (deger);
+    }
+}
+
+int toplam(int n) {
+    int sonuc = 0;
+    for (int i = 1; i <= n; i++) {
+        sonuc += i;
+    }
+    return (sonuc);
+}
+
+Sayaç sayac = Sayaç();
+sayac.ekle(7);
+sayac.ekle(5);
+
+int ucgen = toplam(5);
+String mesaj = "Sayaç";
+print(mesaj, sayac.oku());
+print("1..5 toplamı =", ucgen);
+print("İkiye katla:", map(x => x * 2, [1, 2, 3]));

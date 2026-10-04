@@ -1,0 +1,23 @@
+ad = "K7"
+n = 3
+
+print("düz: $ad")
+print("ifade: ${n * 2 + 1}")
+print("süslü: ${ad}")
+print("kaçış: \\$ad")
+print("tek tırnak: '$ad'")
+
+liste = [1, 2, 3]
+print("liste: ${liste}")
+
+fn selam(kim) {
+    return "merhaba ${kim}!"
+}
+print(selam("dünya"))
+
+sozluk = {"ad": ad}
+print("harita: ${sozluk}")
+
+print("""üç tırnak
+${ad} ile
+çok satır""")

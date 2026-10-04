@@ -1,0 +1,13 @@
+# Örnek 1 - FizzBuzz
+for i in range(1, 101) {
+    if i % 3 == 0 and i % 5 == 0 {
+        printn("FizzBuzz ")
+    } else if i % 3 == 0 {
+        printn("Fizz ")
+    } else if i % 5 == 0 {
+        printn("Buzz ")
+    } else {
+        printn(i, " ")
+    }
+}
+print("")

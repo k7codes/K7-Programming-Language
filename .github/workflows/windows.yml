@@ -1,0 +1,21 @@
+name: Windows build and tests
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build-and-test:
+    runs-on: windows-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Build K7
+        shell: cmd
+        run: build.bat
+
+      - name: Run K7 tests
+        shell: cmd
+        run: tests\run_tests.bat

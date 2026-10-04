@@ -1,0 +1,14 @@
+class Kutu {
+    var veriler = []
+
+    fn ekle(x) {
+        veriler = veriler + [x]
+    }
+}
+
+k = Kutu()
+k.ekle(10)
+k.ekle(20)
+print("dis erisim:", k.veriler)
+print("indis:", k.veriler[0], k.veriler[1])
+print("uzunluk:", len(k.veriler))

@@ -1,0 +1,27 @@
+# MSVC / Visual Studio outputs
+/build/
+/.vs/
+*.obj
+*.pdb
+*.ilk
+*.exe
+*.dll
+*.lib
+*.exp
+*.pch
+*.sdf
+*.opensdf
+*.VC.db
+*.VC.VC.opendb
+
+# Editor / operating system files
+.vscode/
+.idea/
+*.user
+*.suo
+*.cache
+Thumbs.db
+Desktop.ini
+
+# Temporary test output
+k7_test_dosya.txt

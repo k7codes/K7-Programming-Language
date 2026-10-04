@@ -1,0 +1,15 @@
+// C kodundaki milyar tur toplama testinin K7 karsiligi.
+// K7 tam sayilari isaretli 64 bittir; toplam bu testte tasmaz.
+
+long toplam = 0;
+double baslangic = clock();
+
+for (long i = 0; i < 1000000000; i++) {
+    toplam += i;
+}
+
+double bitis = clock();
+double saniye = bitis - baslangic;
+
+print("Sure:", saniye, "saniye");
+print("Sonuc:", toplam);
